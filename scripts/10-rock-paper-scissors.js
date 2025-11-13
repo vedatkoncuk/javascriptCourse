@@ -1,0 +1,88 @@
+let score = JSON.parse(localStorage.getItem('score')) ||{
+    win: 0,
+    lose: 0,
+    tie: 0
+};
+
+updateScoreElement();
+
+function playGame(playerMove){
+
+  const computerMove = pickComputerMove();
+
+  let result = '';
+
+  if(playerMove === "scissors") {
+    if(computerMove === 'Rock'){
+      result = 'You lose.';
+    }
+    else if(computerMove === 'Paper'){
+      result = 'You win.';
+    } else {
+      result = 'Tie.';
+    }
+  }
+  
+  else if (playerMove === "paper") {
+    if(computerMove === 'Rock'){
+      result = 'You win.';
+    }
+    else if(computerMove === 'Paper'){
+      result = 'Tie.';
+    } else {
+      result = 'You lose.';
+    }
+  }
+  
+  else{
+    if(computerMove === 'Rock'){
+      result = 'Tie.';
+    }
+    else if(computerMove === 'Paper'){
+      result = 'You lose.';
+    } else {
+      result = 'You win.';
+    }
+  }
+
+    if (result === 'You win.') {
+      score.win += 1;
+    } else if (result === 'You lose.') {
+      score.lose += 1;
+    } else if (result === 'Tie.') {
+      score.tie += 1;
+    }
+
+    localStorage.setItem('score', JSON.stringify(score));
+
+    updateScoreElement();
+
+    document.querySelector('.js-result')
+    .innerHTML = result;
+
+    document.querySelector('.js-move').innerHTML 
+    = `You 
+<img class="move-icon" src="${playerMove}-emoji.png" alt="">
+<img class="move-icon" src="${computerMove}-emoji.png" alt="">
+Computer`;
+}
+
+function updateScoreElement(){
+  const scoreElement = document.querySelector('.js-score')
+  .innerHTML = `Win: ${score.win}  Lose: ${score.lose}  Tie: ${score.tie}`;
+}
+
+function pickComputerMove(){
+  const randomNumber = (Math.random());
+
+  let computerMove = '';
+
+  if (randomNumber >= 0 && randomNumber < 1 / 3) {
+    computerMove = 'Rock';
+  } else if (randomNumber >= 1 / 3 && randomNumber < 2 / 3) {
+    computerMove = 'Paper';
+  } else{
+    computerMove = 'Scissors';
+  }
+  return computerMove;
+}

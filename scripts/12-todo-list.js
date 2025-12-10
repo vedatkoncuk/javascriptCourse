@@ -22,7 +22,9 @@ function renderTodoList() {
     todoListHTML += html;
   });
 
-  document.querySelector('.todo-list-js').innerHTML = todoListHTML;
+  document.querySelector('.todo-list-js')
+  .innerHTML = todoListHTML;
+
 }
 
 function addTodo() {
